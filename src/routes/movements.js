@@ -1,31 +1,28 @@
 const { Router} = require('express');
 const router = Router();
+const quotesCollection = require('../database');
 
 const Movement = require('../models/Movement');
 
 const faker = require('faker');
 
-router.get('/api/movements', async (req, res) =>{
+router.get('/', async (req, res) =>{
     const movements = await Movement.find();
     res.json({movements: movements});
 });
 
-router.get('/api/movements/create', async (req, res) =>{
-    await Movement.create({
-        type: "ingreso",
-        concept: req.body.concept,
-        mount: req.body.mount
-    });
-    res.json({message: 'Movement created'});
-});
-
-router.get('/api/movements/createFaker', async (req, res) =>{
-    await Movement.create({
-        type: "ingreso",
-        concept: faker.commerce.productName(),
-        mount: faker.commerce.price()
-    });
-    res.json({message: 'Movement created'});
+router.post('/', async (req, res) =>{
+    console.log(req.body);
+    const { type, concept, mount } = req.body;
+    if(type && concept && mount){
+        const movement = new Movement(req.body);
+        await movement.save();
+        res.send('received')
+    }else{
+        res.send('Bad request')
+    }
+    
+    
 });
 
 module.exports = router;

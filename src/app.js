@@ -5,10 +5,14 @@ const cors = require('cors');
 
 app.use(morgan('dev'));
 app.use(cors());
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
+app.set('json spaces', 2);
 
-app.use(require('./routes/movements'));
+app.use('/api/movements',require('./routes/movements'));
+
 app.get('/', (req,res)=>{
-    res.send('Hola');
+    res.json({"title": "Hello world"});
 });
 
 module.exports = app;
