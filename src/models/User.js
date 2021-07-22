@@ -1,5 +1,7 @@
 const { Schema, model} = require('mongoose');
+const movementSchema = new Schema({
+    user: String,
+    password: String,
+});
 
-new Schema({
-    
-})
+module.exports = model('User', movementSchema)

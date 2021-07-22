@@ -10,6 +10,7 @@ app.use(express.json());
 app.set('json spaces', 2);
 
 app.use('/api/movements',require('./routes/movements'));
+app.use('/api/users',require('./routes/users'));
 
 app.get('/', (req,res)=>{
     res.json({"title": "Hello world"});
